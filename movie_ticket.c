@@ -88,7 +88,11 @@ char selectSeat()
             scanf("%d", &_seat_type[user_input-1]);
         }
         else if(user_input == 4 && _child_safe == 0)
+        {
             printf("\tNo child seat is sold for 18-rating movies");
+            getchar();
+            getchar();
+        }
         else
             printf("\tInvalid input.");
     }
