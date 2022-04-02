@@ -22,7 +22,6 @@
 ### Yet to be implemented
 
 - [x] 18-rating child blocking
-- [ ] Data validation
-- [ ] Empty seat selection display warning message
-- [ ] Ability to go back to any other functions in the system before completing payment process
-- [ ] Beautify. ASCII art and color
+- [x] Data validation
+- [x] Empty seat selection display warning message
+- [x] Beautify. ASCII art
