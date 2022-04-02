@@ -8,6 +8,7 @@ void seatPurchased(void);
 void reset(void);
 void summary(void);
 void clear(void);
+void tidy();
 char selectSeat(void);
 char payment(void);
 
@@ -61,9 +62,14 @@ void selectMovieTitle()
     {
         printf("\n\tPlease select a movie (Enter the number): ");
         check = scanf("%d", &user_input);
-        fflush(stdin);
+        tidy(stdin);
 
-        if(!(user_input == 1 || user_input == 2 || user_input == 3 || user_input == 4))
+        if(check == 0)
+        {
+            flag = 1;
+            printf("\tPlease enter ONLY number (1-4), not alphabets or symbols.");
+        }
+        else if(!(user_input == 1 || user_input == 2 || user_input == 3 || user_input == 4))
         {
             flag = 1;
             printf("\tPlease enter the correct number (1-4)");
@@ -91,10 +97,13 @@ char selectSeat()
         seatPurchased();
 
         if(check == 0)
-            printf("\n\tPlease enters in only number for the input");
-        printf("\n\tEnter number to select seat.\n\t 0. to exit the selection\n\t-1. to reselect movie (All seat selection done in prior will be DELETED)\n\n\t> ");
-        fflush(stdin);
+            printf("\n\tPlease enters in only number for the input\n");
+        printf("\n\t[1-4] to select seat.\n\t[ 0 ] to exit the selection\n\t[-1 ] to reselect movie (All seat selection done in prior will be DELETED)\n\n\t> ");
         check = scanf("%d", &user_input);
+        tidy(stdin);
+
+        if(check == 0)
+            continue;
 
         if(user_input == -1)
             return '0';
@@ -106,8 +115,7 @@ char selectSeat()
             if(_amount == 0)
             {
                 printf("\tYou have yet to perform any ticket selection!! (ENTER to continue)");
-                fflush(stdin);
-                getchar();
+                tidy(stdin);
                 continue;
             }
 
@@ -116,19 +124,23 @@ char selectSeat()
         else if(user_input == 1 || user_input == 2 || user_input == 3 || (user_input == 4 && _child_safe == 1))
         {
             printf("\n\t[%s] selected. Please enter the number of seats desired\n\t> ", _seats[user_input-1]);
-            scanf("%d", &_seat_type[user_input-1]);
+            check = scanf("%d", &_seat_type[user_input-1]);
+            tidy(stdin);
+            if(check == 0)
+            {
+                printf("\tPlease enter ONLY number (ENTER to continue)");
+                tidy(stdin);
+            }
         }
         else if(user_input == 4 && _child_safe == 0)
         {
             printf("\tNo child seat is sold for 18-rating movies. (ENTER to continue)");
-            fflush(stdin);
-            getchar();
+            tidy(stdin);
         }
         else
         {
             printf("\tInvalid number. (Enter to continue)");
-            fflush(stdin);
-            getchar();
+            tidy(stdin);
         }
     }
 
@@ -136,9 +148,8 @@ char selectSeat()
     seatPurchased();
 
     printf("\n\n\tTotal amount = RM%d", _amount);
-    printf("\n\n\t1. Edit seat selection.\n\t0. Re-select movie title. (All seat selection done in prior will be DELETED)\n\n\tTo proceed to payment, just Enter with/without any other input");
+    printf("\n\n\t[1] Edit seat selection.\n\t[0] Re-select movie title. (All seat selection done in prior will be DELETED)\n\n\tTo proceed to payment, just Enter with/without any other input");
     printf("\n\t> ");
-    fflush(stdin);
     user_selection = getchar();
 
     if(user_selection == '1')
@@ -190,8 +201,8 @@ char payment()
     while(amount_left > 0.01)
     {
         printf("\n\t> ");
-        fflush(stdin);
         scanf("%f", &user_input);
+        tidy(stdin);
 
         amount_left -= user_input;
 
@@ -203,7 +214,6 @@ char payment()
         printf("\n\tYour outstanding balance is RM%.2f", -amount_left);
 
     printf("\n\n\tEnter 0 to purchase another movie tickets, or just enter (without 0) to exit.\n\t> ");
-    getchar();
     user_selection = getchar();
 
     return user_selection;
@@ -241,4 +251,11 @@ void seatPurchased()
     printf("\t=====================================================================\n");
     for(int i=0;(_child_safe == 1) ? i<4 : i<3; i++)
         printf("\t %d. %s\t\t%10d\t\t%10d\n", i+1, _seats[i], _price[i], _seat_type[i]);
+}
+
+void tidy ( FILE *in )
+{
+  int ch;
+  while ( ( ch = getc ( in ) ) != EOF && ch != '\n' )
+    ;
 }
