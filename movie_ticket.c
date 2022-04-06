@@ -20,6 +20,8 @@ int _child_safe, _amount;
 
 int main()
 {
+    system("chcp 65001");       // Enable unicode on Windows cmd.exe
+    
     char flow_control = '0';
 
     clear();
@@ -51,10 +53,10 @@ void selectMovieTitle()
 
     int user_input;
 
-    printf("\n\n\t\xB2\xB2\xB2\xB2\xB2\xB2\xB2\xB2\xB2\xB2\xB2\xB2\xB2\xB2\xB2\xB2\xB2 NOW SHOWING \xB2\xB2\xB2\xB2\xB2\xB2\xB2\xB2\xB2\xB2\xB2\xB2\xB2\xB2\xB2\xB2\xB2\xB2\n");
+    printf("\n\n\t\u2593\u2593\u2593\u2593\u2593\u2593\u2593\u2593\u2593\u2593\u2593\u2593\u2593\u2593\u2593\u2593\u2593 NOW SHOWING \u2593\u2593\u2593\u2593\u2593\u2593\u2593\u2593\u2593\u2593\u2593\u2593\u2593\u2593\u2593\u2593\u2593\u2593\n");
     for(int i=0; i<4;i++)
-        printf("\n\t\xDB\xDB\xDB\xDB\xB2 %d.\t%s\n", i+1, movie_titles[i]);
-    printf("\n\t\xB2\xB2\xB2\xB2\xB2\xB2\xB2\xB2\xB2\xB2\xB2\xB2\xB2\xB2\xB2\xB2\xB2\xB2\xB2\xB2\xB2\xB2\xB2\xB2\xB2\xB2\xB2\xB2\xB2\xB2\xB2\xB2\xB2\xB2\xB2\xB2\xB2\xB2\xB2\xB2\xB2\xB2\xB2\xB2\xB2\xB2\xB2\xB2\xB2\n");
+        printf("\n\t\u2588\u2588\u2588\u2588\u2593 %d.\t%s\n", i+1, movie_titles[i]);
+    printf("\n\t\u2593\u2593\u2593\u2593\u2593\u2593\u2593\u2593\u2593\u2593\u2593\u2593\u2593\u2593\u2593\u2593\u2593\u2593\u2593\u2593\u2593\u2593\u2593\u2593\u2593\u2593\u2593\u2593\u2593\u2593\u2593\u2593\u2593\u2593\u2593\u2593\u2593\u2593\u2593\u2593\u2593\u2593\u2593\u2593\u2593\u2593\u2593\u2593\u2593\n");
 
     int flag = 0, check = 1;
 
@@ -167,7 +169,7 @@ void summary()
     for(int i=0;i<4;i++)
         no_of_tickets += _seat_type[i];
 
-    printf("\n\t\t\t\t\xB2\xB2\xB2\xB2 SUMMARY  \xB2\xB2\xB2\xB2");
+    printf("\n\t\t\t\t\u2593\u2593\u2593\u2593 SUMMARY  \u2593\u2593\u2593\u2593");
     printf("\n\n\tYou have selected movie %s", _title);
     printf("\n\n\tYou have selected %d movie tickets, which consists of:\n", no_of_tickets);
     printf("\n\n\t===============================================================\n");
@@ -244,7 +246,7 @@ void header()
 
 void seatPurchased()
 {
-    printf("\n\t\t\t\t\xB2\xB2\xB2\xB2 SEAT SELECTION  \xB2\xB2\xB2\xB2");
+    printf("\n\t\t\t\t\u2593\u2593\u2593\u2593 SEAT SELECTION  \u2593\u2593\u2593\u2593");
     printf("\n\n\tMOVIE: %s", _title);
     printf("\n\n\t=====================================================================\n");
     printf("\t Seat Type\t\tPrice per Unit (RM)\tNo item purchased\n");
@@ -253,9 +255,9 @@ void seatPurchased()
         printf("\t %d. %s\t\t%10d\t\t%10d\n", i+1, _seats[i], _price[i], _seat_type[i]);
 }
 
-void tidy ( FILE *in )
+void tidy (FILE *in)
 {
   int ch;
-  while ( ( ch = getc ( in ) ) != EOF && ch != '\n' )
+  while ((ch = getc (in)) != EOF && ch != '\n')
     ;
 }
