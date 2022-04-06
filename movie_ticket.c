@@ -198,7 +198,7 @@ char payment()
 
     printf("\n\n\tPlease pay RM%.2f NETT.", amount_left);
 
-    while(amount_left > 0.005)
+    while(amount_left > 0.01)
     {
         printf("\n\t> ");
         scanf("%f", &user_input);
@@ -206,11 +206,11 @@ char payment()
 
         amount_left -= user_input;
 
-        if(amount_left > 0.005)
+        if(amount_left > 0.01)
             printf("\n\tYou still need to pay another RM%.2f", amount_left);
     }
 
-    if(amount_left < -0.005)
+    if(amount_left < 0)
         printf("\n\tYour outstanding balance is RM%.2f", -amount_left);
 
     printf("\n\n\tEnter 0 to purchase another movie tickets, or just enter (without 0) to exit.\n\t> ");
