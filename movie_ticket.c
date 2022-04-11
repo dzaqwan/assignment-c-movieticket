@@ -28,13 +28,16 @@ int main()
     while(flow_control == '0')
     {
         selectMovieTitle();
+
         flow_control = selectSeat();
         if(flow_control == '0')
         {
             reset();
             continue;
         }
+
         summary();
+        
         flow_control = payment();
         if(flow_control == '0')
             reset();
@@ -51,10 +54,10 @@ void selectMovieTitle()
 
     int user_input;
 
-    printf("\n\n\t\xB2\xB2\xB2\xB2\xB2\xB2\xB2\xB2\xB2\xB2\xB2\xB2\xB2\xB2\xB2\xB2\xB2 NOW SHOWING \xB2\xB2\xB2\xB2\xB2\xB2\xB2\xB2\xB2\xB2\xB2\xB2\xB2\xB2\xB2\xB2\xB2\xB2\n");
+    printf("\n\n\t***************** NOW SHOWING ******************\n");
     for(int i=0; i<4;i++)
-        printf("\n\t\xDB\xDB\xDB\xDB\xB2 %d.\t%s\n", i+1, movie_titles[i]);
-    printf("\n\t\xB2\xB2\xB2\xB2\xB2\xB2\xB2\xB2\xB2\xB2\xB2\xB2\xB2\xB2\xB2\xB2\xB2\xB2\xB2\xB2\xB2\xB2\xB2\xB2\xB2\xB2\xB2\xB2\xB2\xB2\xB2\xB2\xB2\xB2\xB2\xB2\xB2\xB2\xB2\xB2\xB2\xB2\xB2\xB2\xB2\xB2\xB2\xB2\xB2\n");
+        printf("\n\t[%d]\t\t%s\n", i+1, movie_titles[i]);
+    printf("\n\t*************************************************\n");
 
     int flag = 0, check = 1;
 
@@ -69,7 +72,7 @@ void selectMovieTitle()
             flag = 1;
             printf("\tPlease enter ONLY number (1-4), not alphabets or symbols.");
         }
-        else if(!(user_input == 1 || user_input == 2 || user_input == 3 || user_input == 4))
+        else if(!(user_input >= 1 && user_input <= 4))
         {
             flag = 1;
             printf("\tPlease enter the correct number (1-4)");
@@ -93,17 +96,18 @@ char selectSeat()
     while(1)
     {
         clear();
-
         seatPurchased();
 
-        if(check == 0)
-            printf("\n\tPlease enters in only number for the input\n");
         printf("\n\t[1-4] to select seat.\n\t[ 0 ] to exit the selection\n\t[-1 ] to reselect movie (All seat selection done in prior will be DELETED)\n\n\t> ");
         check = scanf("%d", &user_input);
         tidy(stdin);
 
         if(check == 0)
+        {
+            printf("\n\tPlease enters in only number for the input (ENTER to continue)");
+            tidy(stdin);
             continue;
+        }
 
         if(user_input == -1)
             return '0';
@@ -121,7 +125,7 @@ char selectSeat()
 
             break;
         }
-        else if(user_input == 1 || user_input == 2 || user_input == 3 || (user_input == 4 && _child_safe == 1))
+        else if((user_input >= 1 && user_input <= 3)|| (user_input == 4 && _child_safe == 1))
         {
             printf("\n\t[%s] selected. Please enter the number of seats desired\n\t> ", _seats[user_input-1]);
             check = scanf("%d", &_seat_type[user_input-1]);
@@ -167,7 +171,7 @@ void summary()
     for(int i=0;i<4;i++)
         no_of_tickets += _seat_type[i];
 
-    printf("\n\t\t\t\t\xB2\xB2\xB2\xB2 SUMMARY  \xB2\xB2\xB2\xB2");
+    printf("\n\t\t\t\t**** SUMMARY  ****");
     printf("\n\n\tYou have selected movie %s", _title);
     printf("\n\n\tYou have selected %d movie tickets, which consists of:\n", no_of_tickets);
     printf("\n\n\t===============================================================\n");
@@ -244,7 +248,7 @@ void header()
 
 void seatPurchased()
 {
-    printf("\n\t\t\t\t\xB2\xB2\xB2\xB2 SEAT SELECTION  \xB2\xB2\xB2\xB2");
+    printf("\n\t\t\t\t**** SEAT SELECTION  ****");
     printf("\n\n\tMOVIE: %s", _title);
     printf("\n\n\t=====================================================================\n");
     printf("\t Seat Type\t\tPrice per Unit (RM)\tNo item purchased\n");
@@ -253,9 +257,9 @@ void seatPurchased()
         printf("\t %d. %s\t\t%10d\t\t%10d\n", i+1, _seats[i], _price[i], _seat_type[i]);
 }
 
-void tidy ( FILE *in )
+void tidy (FILE *in)
 {
   int ch;
-  while ( ( ch = getc ( in ) ) != EOF && ch != '\n' )
+  while ((ch = getc (in)) != EOF && ch != '\n')
     ;
 }
