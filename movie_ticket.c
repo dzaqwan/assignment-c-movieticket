@@ -52,14 +52,12 @@ void selectMovieTitle()
     char movie_titles[4][50] = {"Jujutsu Kaisen 0", "The Batman", "(18+) The Wolf of Wall Street", "Morbius"};
     int child_safe[4] = {1, 1, 0, 1};
 
-    int user_input;
-
     printf("\n\n\t***************** NOW SHOWING ******************\n");
     for(int i=0; i<4;i++)
         printf("\n\t[%d]\t\t%s\n", i+1, movie_titles[i]);
     printf("\n\t*************************************************\n");
 
-    int flag = 0, check = 1;
+    int user_input, flag = 0, check = 1;
 
     do
     {
@@ -90,8 +88,8 @@ void selectMovieTitle()
 
 char selectSeat()
 {   
-    int user_input, check = 1;
     char user_selection;
+    int user_input, seat_count = 0, check = 1;
 
     while(1)
     {
@@ -104,7 +102,7 @@ char selectSeat()
 
         if(check == 0)
         {
-            printf("\n\tPlease enters in only number for the input (ENTER to continue)");
+            printf("\tPlease enters in only number for the input (ENTER to continue)");
             tidy(stdin);
             continue;
         }
@@ -115,7 +113,10 @@ char selectSeat()
         {
              _amount = 0;
             for(int i=0;i<4;i++)
+            {
+                seat_count += _seat_type[i];
                 _amount += _price[i] * _seat_type[i];
+            }
             if(_amount == 0)
             {
                 printf("\tYou have yet to perform any ticket selection!! (ENTER to continue)");
@@ -127,13 +128,25 @@ char selectSeat()
         }
         else if((user_input >= 1 && user_input <= 3)|| (user_input == 4 && _child_safe == 1))
         {
+            int seat_quantity = 0;
+
             printf("\n\t[%s] selected. Please enter the number of seats desired\n\t> ", _seats[user_input-1]);
-            check = scanf("%d", &_seat_type[user_input-1]);
+            check = scanf("%d", &seat_quantity);
             tidy(stdin);
             if(check == 0)
             {
                 printf("\tPlease enter ONLY number (ENTER to continue)");
                 tidy(stdin);
+            }
+            else
+            {
+                if(seat_quantity < 0)
+                {
+                    printf("\tNegative number is not a valid number (ENTER to continue)");
+                    tidy(stdin);
+                }
+                else
+                    _seat_type[user_input-1] = seat_quantity;
             }
         }
         else if(user_input == 4 && _child_safe == 0)
@@ -151,7 +164,7 @@ char selectSeat()
     clear();
     seatPurchased();
 
-    printf("\n\n\tTotal amount = RM%d", _amount);
+    printf("\n\n\tTotal seat: %d\n\tTotal amount: RM%d", seat_count, _amount);
     printf("\n\n\t[1] Edit seat selection.\n\t[0] Re-select movie title. (All seat selection done in prior will be DELETED)\n\n\tTo proceed to payment, just Enter with/without any other input");
     printf("\n\t> ");
     user_selection = getchar();
